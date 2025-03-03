@@ -69,6 +69,20 @@ class Library {
         }
     }
 
+// Task 5: Implementing Book Returns
+// Add a method return book in the library class
+    returnBook(borrowerId, isbn) {
+        let book = this.books.find(b => b.isbn === isbn);
+        let borrower = this.borrowers.find(b => b.borrowerId === borrowerId);
+// updated copies
+        if (book && borrower && borrower.borrowedBooks.includes(book.title)) {
+            book.updateCopies(1);
+            borrower.returnBook(book.title);
+        } else {
+            console.log("Invalid return attempt.");
+        }
+    }
+}
 
 // Task 1
 const book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", 123456, 5);
@@ -102,3 +116,10 @@ console.log(book1.getDetails());
 // Expected: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 3"
 console.log(borrower1.borrowedBooks);
 // Expected: ["The Great Gatsby"]
+
+// Task 5
+library.returnBook(201, 123456);
+console.log(book1.getDetails());
+// Expected: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4"
+console.log(borrower1.borrowedBooks);
+// Expected: []
